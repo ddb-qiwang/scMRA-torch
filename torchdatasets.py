@@ -4,6 +4,7 @@ import torch
 from PIL import Image
 import numpy as np
 
+# define a dataset class for single cell RNA-seq data
 class Dataset(data.Dataset):
 
     def __init__(self, cells, raw, sf, label):

@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
-
+# define a ZINB model loss 
 class ZINBLoss(nn.Module):
     def __init__(self):
         super(ZINBLoss, self).__init__()

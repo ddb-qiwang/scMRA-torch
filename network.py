@@ -13,52 +13,6 @@ from torchdata import*
 from loss import*
 from gcn.models import GCN
 
-len_baronME_close = 7487
-len_E_close = 2229
-len_ME_close = 1917
-
-len_baronEM_close = 8012
-len_E_close = 2229
-len_M_close = 2042
-
-len_baronEM_partial = 8569
-len_E_partial = 2229
-len_M_partial = 2042
-
-len_baronM_close = 8012
-len_muraro_close = 2042
-
-len_baronM_partial = 8569
-len_muraro_partial = 2042
-
-len_baronE_close = 7487
-len_enge_close = 2229
-
-len_baronE_partial = 8569
-len_enge_partial = 2229
-
-len_baron = 8296
-len_enge = 2282
-len_muraro = 2122
-
-len_10x = 1866
-len_dropseq = 1509
-len_fluidigm = 685
-
-len_spleen = 9552
-len_spleen_ = 1697
-
-len_tongue = 7538
-len_tongue_ = 1416
-
-len_trachea = 11269
-len_trachea_ = 1350
-
-len_bh_c = 5452
-len_e_c = 1429
-len_m_c = 1453
-len_s_c = 673
-len_x_c = 576
 
 def buildNetwork(layers, type, activation="relu"):
     net = []
@@ -70,6 +24,7 @@ def buildNetwork(layers, type, activation="relu"):
             net.append(nn.Sigmoid())
     return nn.Sequential(*net)
 
+#define an autoencoder class
 class Autoencoder(nn.Module):
     def __init__(self, input_dim, z_dim, n_clusters, encodeLayer=[], decodeLayer=[], activation="relu"):
         super(Autoencoder, self).__init__()
@@ -97,7 +52,13 @@ class Autoencoder(nn.Module):
         h0 = self.encoder(x)
         z0 = self._enc_mu(h0)
         return z0, _mean, _disp, _pi
-    
+
+#define a solver for scMRA model
+#entropy_thr: unassigned data with an entropy higher than entropy_thr will be filtered out
+#Lambda, beta, alpha: weight parameters for loss functions
+#use_target: =0 if not using the target data, =1 if using
+#count_thr: cell types with a count less than count_thr in a training batch will not be calculated in the loss funtion
+#unas_thr, use_filter, filter_index: parameters for entropy based novelty detection
 class Solver(object):
     def __init__(self, z_dim, encodeLayer, decodeLayer,
                  nfeat, nclasses, sigma, entropy_thr, Lambda_global, Lambda_local, beta, alpha,
@@ -648,7 +609,7 @@ class Solver(object):
         
         return index_t.cpu().numpy()  
         
-        
+    # output the latent features of test samples    
     def test_feature(self, file_path):
         self.Autoencoder.eval()
         self.GCN.eval()

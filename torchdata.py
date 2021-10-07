@@ -7,16 +7,8 @@ from torchdatasets import Dataset
 from preprocess import*
 import scanpy as sc
 
-len_10x = 1866
-len_dropseq = 1509
-len_fluidigm = 685
-
-len_spleen = 9552
-len_spleen_ = 1697
-len_tongue = 7538
-len_tongue_ = 1416
-len_trachea = 11269
-len_trachea_ = 1350
+#construct multi-reference dataset
+#S refers to the set of source datasets(reference datasets), T refers to the test dataset(unassigned dataset)
 
 '''
 def dataset_read(highly_variable, batch_size, use_filter=False, filter_index=False, open_case=False, use_latent=False, use_cluster=False):

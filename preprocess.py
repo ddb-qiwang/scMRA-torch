@@ -1,4 +1,4 @@
-#读取h5文件
+#read h5py files and preprocess the datasets
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function

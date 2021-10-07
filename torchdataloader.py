@@ -4,9 +4,9 @@ import torchvision.transforms as transforms
 from torchdatasets import Dataset
 import numpy as np
 
-random_seed = [1111,2222,3333,4444,5555,6666,7777,8888,9999]
-np.random.seed(random_seed[0])
 
+#define dataloader for multi-reference datasets
+#this is an example for 3 source/1 test multi-reference dataset
 
 class PairedData(object):
     def __init__(self, data_loader_A, data_loader_B, data_loader_C, data_loader_t, max_dataset_size):

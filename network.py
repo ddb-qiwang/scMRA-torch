@@ -60,8 +60,8 @@ class Autoencoder(nn.Module):
 #count_thr: cell types with a count less than count_thr in a training batch will not be calculated in the loss funtion
 #unas_thr, use_filter, filter_index: parameters for entropy based novelty detection
 class Solver(object):
-    def __init__(self, z_dim, encodeLayer, decodeLayer,
-                 nfeat, nclasses, sigma, entropy_thr, Lambda_global, Lambda_local, beta, alpha,
+    def __init__(self, rna_mats, labels, nclasses, z_dim=32, encodeLayer=[256,64], decodeLayer=[256,64],
+                 nfeat=32, sigma=1/np.exp(4.5), entropy_thr=10, Lambda_global=200, Lambda_local=0.001, beta=0.65, alpha=1.0,
                  use_target=1, ndomain=2, highly_variable=2000, batch_size=256, activation='relu', 
                  count_thr=0, unas_thr=2.0, use_filter=False, filter_index=False, 
                  learning_rate=0.002, interval=2, optimizer='adam', checkpoint_dir=None, save_epoch=10):
@@ -94,11 +94,11 @@ class Solver(object):
         # load source and target domains
         if self.use_filter:
             print(self.filter_index)
-            self.datasets, self.dataset_size, input_size, self.target_size = dataset_read(self.highly_variable, self.batch_size, use_filter=True, filter_index=self.filter_index)
+            self.datasets, self.dataset_size, input_size, self.target_size = dataset_read(rna_mats, labels, self.highly_variable, self.batch_size, use_filter=True, filter_index=self.filter_index)
             self.niter = self.dataset_size / self.batch_size
             print('Filtered dataset loaded!')
         else:
-            self.datasets, self.dataset_size, input_size, self.target_size = dataset_read(self.highly_variable, self.batch_size)
+            self.datasets, self.dataset_size, input_size, self.target_size = dataset_read(rna_mats, labels, self.highly_variable, self.batch_size)
             self.niter = self.dataset_size / self.batch_size
             print('Dataset loaded!')
 

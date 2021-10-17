@@ -43,7 +43,10 @@ def dataset_read(rna_mats, labels, highly_variable, batch_size, use_filter=False
     T['cells'] = metadata.X[start_idx:]
     T['raw'] = metadata.raw.X[start_idx:]
     T['sf'] = metadata.obs['size_factors'][start_idx:]
-    T['labels']= labels[-1]
+    if len(labels) == n_data:
+        T['labels'] = labels[-1]
+    else:
+        T['labels] = np.zeros((T['cells'].shape[0], 1))
     dataset_size.append(len(labels[-1]))
     input_size = np.shape(T['cells'])[1]
     target_size = len(labels[-1])
@@ -52,7 +55,10 @@ def dataset_read(rna_mats, labels, highly_variable, batch_size, use_filter=False
         T['cells'] = T['cells'][filter_index]
         T['raw'] = T['raw'][filter_index]
         T['sf'] = T['sf'][filter_index]
-        T['labels'] = T['labels'][filter_index]
+        if len(labels) == n_data:
+            T['labels'] = labels[filter_index]
+        else:
+            T['labels] = np.zeros((T['cells'].shape[0], 1))
         dataset_size.append(len(T['labels']))
         
     train_loader = UnalignedDataLoader()

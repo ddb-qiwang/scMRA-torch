@@ -62,7 +62,7 @@ class Autoencoder(nn.Module):
 class Solver(object):
     def __init__(self, rna_mats, labels, nclasses, z_dim=32, encodeLayer=[256,64], decodeLayer=[256,64],
                  nfeat=32, sigma=1/np.exp(4.5), entropy_thr=10, Lambda_global=200, Lambda_local=0.001, beta=0.65, alpha=1.0,
-                 use_target=1, ndomain=2, highly_variable=2000, batch_size=256, activation='relu', 
+                 use_target=1, ndomain=4, highly_variable=2000, batch_size=256, activation='relu', 
                  count_thr=0, unas_thr=2.0, use_filter=False, filter_index=False, 
                  learning_rate=0.002, interval=2, optimizer='adam', checkpoint_dir=None, save_epoch=10):
         

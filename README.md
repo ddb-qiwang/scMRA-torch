@@ -15,7 +15,9 @@ Here rna_mati are scRNA_seq count matrices aligned by gene. rna_matn is the quer
 Where labeli are column vectors. For annotation use, the labeln which refers the targe label is not needed.
 
 # Training
-For evaluating:
+Once you accquire the rna_mats and labels, you can use scMRA to predict the cell type of query samples.
+
+We give an instance that train the scMRA model with test data for 200 epochs.
 
     from sklearn.metrics import adjusted_rand_score, adjusted_mutual_info_score
     from preprocess import*
